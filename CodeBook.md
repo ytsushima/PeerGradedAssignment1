@@ -5,12 +5,12 @@
 - Each feature vector is a row on the text file.
 
 ### key features
-* subject
+* subject  
   The identification number of volunteers who participate in the experiments. (1-30) 
-* activityName
+* activityName  
   Human activities performed by the volunteers in the experiments.
   (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING)
-* activityLabel
+* activityLabel  
   the activities code (1-6)
 
 ### the body acceleration signals - mean and standard deviation
