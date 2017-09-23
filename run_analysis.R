@@ -2,6 +2,23 @@
 library(dplyr)
 
 #
+# download the original file
+#
+
+fileName <- "UCI_HAR_Dataset.zip"
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+
+if (!file.exists(fileName)) {
+    download.file(fileUrl, fileName)
+
+    unzip(fileName)
+
+    file.rename("UCI HAR Dataset", "UCI_HAR_Dataset")
+
+    setwd("./UCI_HAR_Dataset")
+}
+
+#
 # 1.Merges the training and the test sets to create one data set
 #
 
