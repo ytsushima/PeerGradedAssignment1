@@ -29,9 +29,7 @@ dataset <- rbind(train, test)
 
 #   read feature names
 features <- scan("./features.txt",what = character(), sep = "\n")
-
-features <- sub(" ","_", features)
-features <- sprintf("X%s", features)
+features <- sub("^[0-9]+ ","", features)
 
 #   selects necessary columns
 #    -- the mean and standard deviation for each measurement
