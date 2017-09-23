@@ -1,9 +1,10 @@
-## variables in the dataset
+# variables in the dataset
 
+### Notes
 - Features are normalized and bounded within [-1,1].
 - Each feature vector is a row on the text file.
 
-
+### key features
 * subject
   The identification number of volunteers who participate in the experiments. (1-30) 
 * activityName
