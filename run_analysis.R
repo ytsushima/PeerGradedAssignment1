@@ -1,3 +1,10 @@
+
+library(dplyr)
+
+#
+# 1.Merges the training and the test sets to create one data set
+#
+
 # read files
 #   subject fules
 subjectTrain <- read.fwf("./train/subject_train.txt", width = 3, col.names = "subject")
@@ -16,10 +23,27 @@ test <- cbind(XTest, yTest, subjectTest)
 
 dataset <- rbind(train, test)
 
+#
+# 2.Extracts only the measurements on the mean and standard deviation for each measurement.
+#
+
 #   read feature names
 features <- scan("./features.txt",what = character(), sep = "\n")
 
 features <- sub(" ","_", features)
+features <- sprintf("X%s", features)
+
+#   selects necessary columns
+#    -- the mean and standard deviation for each measurement
+
+necessaryColumns <- c(sprintf("V%s", grep("mean\\(|std\\(", features)), "activityLabel", "subject")
+features <- grep("mean\\(|std\\(", features, value = TRUE)
+
+dataset <- select(dataset, necessaryColumns)
+
+#
+# 3.Uses descriptive activity names to name the activities in the data set
+#
 
 #   read activity labels
 activityLabels <- read.fwf("./activity_labels.txt", width = c(2,18), col.names = c("activityLabel","activityName"))
@@ -27,16 +51,19 @@ activityLabels <- read.fwf("./activity_labels.txt", width = c(2,18), col.names =
 #   merge activity names
 dataset <- merge(dataset, activityLabels, by = "activityLabel")
 
+#
+# 4.Appropriately labels the data set with descriptive variable names.
+#
+
 names(dataset) <- c("activityLabel", features, "subject", "activityName")
 
-#   selects necessary columns
-necessaryColumns <- c("subject", "activityLabel", "activityName", grep("mean\\(|std\\(", features, value = TRUE))
-
-library(dplyr)
+#
+# 5.From the data set in step 4, creates a second, independent tidy data set 
+#   with the average of each variable for each activity and each subject.
+#
 
 # grouped by subject and activityName
 dataset2 <- dataset %>%
-            select(necessaryColumns) %>%
             group_by(subject, activityName) %>%
             summarize_all(mean)
 
